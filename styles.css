@@ -76,6 +76,9 @@ td { padding: 14px 8px; border-top: 1px solid var(--line); }
 .chat-messages { flex: 1; min-height: 132px; padding: 12px; border-radius: 9px; background: #f5f7fa; }
 .message { max-width: 90%; margin-bottom: 10px; padding: 9px 11px; border-radius: 9px; color: var(--ink); background: #fff; font-size: 12px; line-height: 1.45; }
 .message.user-message { margin-right: 0; margin-left: auto; color: #fff; background: var(--blue); }
+.message.assistant-structure { display: grid; gap: 6px; max-width: 100%; }
+.message.assistant-structure strong { color: var(--navy); font-size: 12px; }
+.message.assistant-structure span { color: var(--muted); }
 .chat-form { display: flex; gap: 8px; margin-top: 12px; }
 .chat-form input { min-width: 0; flex: 1; padding: 10px; border: 1px solid var(--line); border-radius: 7px; outline: none; }
 .chat-form input:focus { border-color: var(--blue); }
