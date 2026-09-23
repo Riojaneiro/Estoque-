@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP-SP | Gestão de Inquéritos</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">MP</div>
+          <div><strong>Ministério Público</strong><span>Estado de São Paulo</span></div>
+        </div>
+        <div class="nav-label">Área de trabalho</div>
+        <nav class="nav" aria-label="Navegação principal">
+          <button class="active" type="button" data-section="Visão geral"><span class="nav-icon">⌂</span>Visão geral</button>
+          <button type="button" data-section="Investigações"><span class="nav-icon">⌕</span>Investigações</button>
+          <button type="button" data-section="Fiscalizações"><span class="nav-icon">✓</span>Fiscalizações</button>
+          <button type="button" data-section="Documentos"><span class="nav-icon">▤</span>Documentos</button>
+          <button type="button" data-section="Inquéritos"><span class="nav-icon">§</span>Inquéritos</button>
+        </nav>
+        <div class="sidebar-footer">Ambiente institucional<br />Acesso restrito e auditado</div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="breadcrumb" id="breadcrumb">Área de trabalho / Visão geral</div>
+          <div class="user"><span>Promotor(a) de Justiça</span><div class="avatar">PJ</div></div>
+        </header>
+
+        <div class="content">
+          <p class="eyebrow">Painel institucional</p>
+          <h1>Gestão de procedimentos</h1>
+          <p class="subtitle">Organize investigações, fiscalizações, documentos e inquéritos em um único ambiente de trabalho.</p>
+
+          <section class="stats" aria-label="Resumo">
+            <div class="card stat"><div class="stat-label">Investigações ativas</div><div class="stat-value">24</div><div class="stat-detail">+3 neste mês</div></div>
+            <div class="card stat"><div class="stat-label">Fiscalizações abertas</div><div class="stat-value">12</div><div class="stat-detail">4 aguardando análise</div></div>
+            <div class="card stat"><div class="stat-label">Inquéritos em andamento</div><div class="stat-value">18</div><div class="stat-detail">6 com prazo próximo</div></div>
+            <div class="card stat"><div class="stat-label">Documentos arquivados</div><div class="stat-value">156</div><div class="stat-detail">Organizados por procedimento</div></div>
+          </section>
+
+          <div class="section-heading"><h2>Módulos principais</h2><button class="link-button" type="button" id="new-procedure">+ Novo procedimento</button></div>
+          <section class="modules" aria-label="Módulos principais">
+            <article class="card module"><div class="module-icon">⌕</div><h3>Investigações</h3><p>Registre fatos, envolvidos, diligências e evidências da investigação.</p><button class="module-action" type="button" data-section="Investigações">Acessar investigações</button></article>
+            <article class="card module"><div class="module-icon">✓</div><h3>Fiscalizações</h3><p>Acompanhe fiscalizações, relatórios, prazos e providências.</p><button class="module-action" type="button" data-section="Fiscalizações">Acessar fiscalizações</button></article>
+            <article class="card module"><div class="module-icon">§</div><h3>Estrutura de inquérito</h3><p>Monte a estrutura do inquérito com apoio do assistente institucional.</p><button class="module-action" type="button" data-section="Inquéritos">Abrir estrutura</button></article>
+          </section>
+
+          <div class="lower-grid">
+            <section class="card table-card">
+              <div class="section-heading"><h2>Procedimentos recentes</h2><button class="link-button" type="button" data-section="Documentos">Ver todos</button></div>
+              <div class="table-wrap"><table><thead><tr><th>Procedimento</th><th>Tipo</th><th>Atualização</th><th>Status</th></tr></thead><tbody>
+                <tr><td>IC nº 0042/2025</td><td>Inquérito civil</td><td>Hoje, 10:32</td><td><span class="status">Em andamento</span></td></tr>
+                <tr><td>PA nº 0187/2025</td><td>Investigação</td><td>Ontem, 16:08</td><td><span class="status review">Em análise</span></td></tr>
+                <tr><td>Fiscalização nº 009/2025</td><td>Fiscalização</td><td>12 jun 2025</td><td><span class="status">Em andamento</span></td></tr>
+              </tbody></table></div>
+            </section>
+
+            <section class="card chat-card">
+              <div class="section-heading"><h2>Assistente de inquérito</h2><span class="status">Online</span></div>
+              <p class="chat-intro">Descreva o caso e eu ajudo a organizar a estrutura inicial do inquérito.</p>
+              <div class="chat-messages" id="chat-messages"><div class="message">Olá. Posso ajudar a organizar a estrutura de um novo inquérito.</div></div>
+              <form class="chat-form" id="chat-form"><input id="chat-input" type="text" placeholder="Descreva o caso..." aria-label="Mensagem para o assistente" /><button type="submit">Enviar</button></form>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      const breadcrumb = document.querySelector('#breadcrumb');
+      document.querySelectorAll('[data-section]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const section = button.dataset.section;
+          breadcrumb.textContent = `Área de trabalho / ${section}`;
+          document.querySelectorAll('.nav button').forEach((item) => item.classList.toggle('active', item.dataset.section === section));
+        });
+      });
+      document.querySelector('#new-procedure').addEventListener('click', () => {
+        breadcrumb.textContent = 'Área de trabalho / Novo procedimento';
+      });
+      document.querySelector('#chat-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const input = document.querySelector('#chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+        const messages = document.querySelector('#chat-messages');
+        messages.insertAdjacentHTML('beforeend', `<div class="message user-message">${text.replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[char]))}</div><div class="message">Vou considerar essas informações na estrutura inicial do inquérito. Em uma próxima etapa, poderemos detalhar fatos, diligências, envolvidos e documentos.</div>`);
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+      });
+    </script>
+  </body>
+</html>
