@@ -75,7 +75,8 @@
 
             <section class="card chat-card">
               <div class="section-heading"><h2>Assistente de inquérito</h2><span class="status">Online</span></div>
-              <p class="chat-intro">Descreva o caso e eu ajudo a organizar a estrutura inicial do inquérito.</p>
+                            <p class="chat-intro">Descreva o caso e eu ajudo a organizar a estrutura inicial do inquérito.</p>
+              <div class="chat-prompts" aria-label="Sugestões de início"><button type="button" data-prompt="Quero estruturar um novo inquérito civil">Novo inquérito civil</button><button type="button" data-prompt="Preciso organizar os fatos e as diligências">Fatos e diligências</button></div>
               <div class="chat-messages" id="chat-messages"><div class="message">Olá. Posso ajudar a organizar a estrutura de um novo inquérito.</div></div>
               <form class="chat-form" id="chat-form"><input id="chat-input" type="text" placeholder="Descreva o caso..." aria-label="Mensagem para o assistente" /><button type="submit">Enviar</button></form>
             </section>
@@ -129,13 +130,20 @@
       document.querySelector('#new-procedure').addEventListener('click', () => {
         breadcrumb.textContent = 'Área de trabalho / Novo procedimento';
       });
+            document.querySelectorAll('[data-prompt]').forEach((button) => button.addEventListener('click', () => {
+        document.querySelector('#chat-input').value = button.dataset.prompt;
+        document.querySelector('#chat-input').focus();
+      }));
       document.querySelector('#chat-form').addEventListener('submit', (event) => {
         event.preventDefault();
         const input = document.querySelector('#chat-input');
         const text = input.value.trim();
         if (!text) return;
         const messages = document.querySelector('#chat-messages');
-        messages.insertAdjacentHTML('beforeend', `<div class="message user-message">${text.replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[char]))}</div><div class="message">Vou considerar essas informações na estrutura inicial do inquérito. Em uma próxima etapa, poderemos detalhar fatos, diligências, envolvidos e documentos.</div>`);
+                const safeText = text.replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[char]));
+        const hasFiscalizacao = /fiscaliza|órgão|serviço público/i.test(text);
+        const subject = hasFiscalizacao ? 'fiscalização e possível irregularidade administrativa' : 'fatos narrados e seus possíveis impactos';
+        messages.insertAdjacentHTML('beforeend', `<div class="message user-message">${safeText}</div><div class="message assistant-structure"><strong>Estrutura inicial sugerida</strong><span>1. Objeto: ${subject}</span><span>2. Fatos e contexto: registrar período, local e envolvidos</span><span>3. Diligências: documentos, oitivas e verificações necessárias</span><span>4. Responsáveis e interessados: identificar pessoas e instituições</span><span>5. Providências: definir prazos, evidências e próximos passos</span></div>`);
         input.value = '';
         messages.scrollTop = messages.scrollHeight;
       });
