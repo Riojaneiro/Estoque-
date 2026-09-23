@@ -135,7 +135,10 @@
         const text = input.value.trim();
         if (!text) return;
         const messages = document.querySelector('#chat-messages');
-        messages.insertAdjacentHTML('beforeend', `<div class="message user-message">${text.replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[char]))}</div><div class="message">Vou considerar essas informações na estrutura inicial do inquérito. Em uma próxima etapa, poderemos detalhar fatos, diligências, envolvidos e documentos.</div>`);
+                const safeText = text.replace(/[&<>]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[char]));
+        const hasFiscalizacao = /fiscaliza|órgão|serviço público/i.test(text);
+        const subject = hasFiscalizacao ? 'fiscalização e possível irregularidade administrativa' : 'fatos narrados e seus possíveis impactos';
+        messages.insertAdjacentHTML('beforeend', `<div class="message user-message">${safeText}</div><div class="message assistant-structure"><strong>Estrutura inicial sugerida</strong><span>1. Objeto: ${subject}</span><span>2. Fatos e contexto: registrar período, local e envolvidos</span><span>3. Diligências: documentos, oitivas e verificações necessárias</span><span>4. Responsáveis e interessados: identificar pessoas e instituições</span><span>5. Providências: definir prazos, evidências e próximos passos</span></div>`);
         input.value = '';
         messages.scrollTop = messages.scrollHeight;
       });
