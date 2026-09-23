@@ -1,0 +1,82 @@
+:root {
+  --navy: #102a43;
+  --blue: #1f5f8b;
+  --blue-soft: #e8f1f8;
+  --ink: #243b53;
+  --muted: #627d98;
+  --line: #d9e2ec;
+  --surface: #ffffff;
+  --background: #f5f7fa;
+  --success: #237a57;
+  --warning: #b7791f;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--background);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.app-shell { min-height: 100vh; display: flex; }
+.sidebar { width: 268px; padding: 24px 16px; color: #fff; background: var(--navy); }
+.brand { display: flex; align-items: center; gap: 12px; padding: 4px 10px 30px; }
+.brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; color: var(--navy); background: #fff; font-weight: 800; }
+.brand strong { display: block; font-size: 15px; }
+.brand span { display: block; margin-top: 3px; color: #b9c9d8; font-size: 11px; }
+.nav-label { padding: 0 12px 8px; color: #9fb3c8; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.nav { display: grid; gap: 5px; }
+.nav button { display: flex; align-items: center; gap: 11px; width: 100%; padding: 12px; border: 0; border-radius: 8px; color: #d9e2ec; background: transparent; text-align: left; }
+.nav button:hover, .nav button.active { color: #fff; background: #1f4564; }
+.nav-icon { width: 20px; text-align: center; }
+.sidebar-footer { margin-top: auto; padding: 24px 10px 0; color: #9fb3c8; font-size: 12px; line-height: 1.5; }
+
+.main { flex: 1; min-width: 0; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 34px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.breadcrumb { color: var(--muted); font-size: 13px; }
+.user { display: flex; align-items: center; gap: 10px; color: var(--ink); font-size: 13px; }
+.avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #fff; background: var(--blue); font-weight: 700; }
+.content { max-width: 1320px; margin: 0 auto; padding: 34px; }
+.eyebrow { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+h1 { margin: 0; color: var(--navy); font-size: clamp(26px, 3vw, 36px); }
+.subtitle { max-width: 680px; margin: 10px 0 28px; color: var(--muted); line-height: 1.6; }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 28px; }
+.card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 3px 12px rgba(16, 42, 67, .04); }
+.stat { padding: 20px; }
+.stat-label { color: var(--muted); font-size: 12px; }
+.stat-value { margin-top: 8px; color: var(--navy); font-size: 28px; font-weight: 750; }
+.stat-detail { margin-top: 5px; color: var(--success); font-size: 12px; }
+
+.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 28px 0 14px; }
+.section-heading h2 { margin: 0; color: var(--navy); font-size: 18px; }
+.link-button { border: 0; color: var(--blue); background: transparent; font-weight: 700; }
+.modules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.module { padding: 21px; }
+.module-icon { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 16px; border-radius: 10px; color: var(--blue); background: var(--blue-soft); font-size: 20px; }
+.module h3 { margin: 0 0 7px; color: var(--navy); font-size: 16px; }
+.module p { min-height: 42px; margin: 0 0 17px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.module-action { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 7px; color: var(--blue); background: #fff; font-weight: 700; }
+.module-action:hover { border-color: var(--blue); background: var(--blue-soft); }
+
+.lower-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(300px, .8fr); gap: 16px; }
+.table-card, .chat-card { padding: 21px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { padding: 12px 8px; color: var(--muted); font-size: 11px; font-weight: 700; text-align: left; text-transform: uppercase; }
+td { padding: 14px 8px; border-top: 1px solid var(--line); }
+.status { display: inline-flex; padding: 5px 8px; border-radius: 999px; color: var(--success); background: #e8f5ef; font-size: 11px; font-weight: 700; }
+.status.review { color: var(--warning); background: #fff7e6; }
+.chat-card { display: flex; flex-direction: column; }
+.chat-intro { margin: 0 0 18px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.chat-messages { flex: 1; min-height: 132px; padding: 12px; border-radius: 9px; background: #f5f7fa; }
+.message { max-width: 90%; margin-bottom: 10px; padding: 9px 11px; border-radius: 9px; color: var(--ink); background: #fff; font-size: 12px; line-height: 1.45; }
+.message.user-message { margin-right: 0; margin-left: auto; color: #fff; background: var(--blue); }
+.chat-form { display: flex; gap: 8px; margin-top: 12px; }
+.chat-form input { min-width: 0; flex: 1; padding: 10px; border: 1px solid var(--line); border-radius: 7px; outline: none; }
+.chat-form input:focus { border-color: var(--blue); }
+.chat-form button { padding: 0 14px; border: 0; border-radius: 7px; color: #fff; background: var(--blue); font-weight: 700; }
+
+@media (max-width: 980px) { .sidebar { width: 220px; } .stats { grid-template-columns: repeat(2, 1fr); } .modules, .lower-grid { grid-template-columns: 1fr; } }
+@media (max-width: 680px) { .app-shell { display: block; } .sidebar { width: 100%; padding: 14px; } .brand { padding-bottom: 16px; } .nav { grid-template-columns: repeat(3, 1fr); } .nav-label, .sidebar-footer { display: none; } .nav button { justify-content: center; padding: 9px 4px; font-size: 11px; } .topbar, .content { padding: 20px; } .user span { display: none; } .stats { grid-template-columns: 1fr 1fr; gap: 10px; } .stat { padding: 14px; } .stat-value { font-size: 23px; } }
