@@ -47,6 +47,20 @@
             <article class="card module"><div class="module-icon">⌕</div><h3>Investigações</h3><p>Registre fatos, envolvidos, diligências e evidências da investigação.</p><button class="module-action" type="button" data-section="Investigações">Acessar investigações</button></article>
             <article class="card module"><div class="module-icon">✓</div><h3>Fiscalizações</h3><p>Acompanhe fiscalizações, relatórios, prazos e providências.</p><button class="module-action" type="button" data-section="Fiscalizações">Acessar fiscalizações</button></article>
             <article class="card module"><div class="module-icon">§</div><h3>Estrutura de inquérito</h3><p>Monte a estrutura do inquérito com apoio do assistente institucional.</p><button class="module-action" type="button" data-section="Inquéritos">Abrir estrutura</button></article>
+                    </section>
+
+          <section class="card management-card" id="management-workspace" hidden>
+            <div class="section-heading management-heading"><div><p class="eyebrow">Gestão operacional</p><h2 id="management-title">Investigações</h2></div><button class="primary-button" type="button" id="new-record">+ Novo registro</button></div>
+            <div class="management-toolbar"><div class="management-tabs" role="tablist" aria-label="Tipo de procedimento"><button class="management-tab active" type="button" data-management="Investigações">Investigações</button><button class="management-tab" type="button" data-management="Fiscalizações">Fiscalizações</button></div><label class="search-field"><span>Buscar</span><input id="record-search" type="search" placeholder="Número, assunto ou responsável" /></label></div>
+            <div class="management-summary"><div><strong id="visible-count">3</strong><span>registros encontrados</span></div><div><strong>2</strong><span>com prazo próximo</span></div><div><strong>1</strong><span>aguardando análise</span></div></div>
+            <div class="table-wrap"><table><thead><tr><th>Procedimento</th><th>Assunto</th><th>Responsável</th><th>Prazo</th><th>Status</th></tr></thead><tbody id="records-body">
+              <tr data-type="Investigações"><td><strong>PA nº 0187/2025</strong></td><td>Contratos públicos</td><td>Equipe 02</td><td>18 jun 2025</td><td><span class="status review">Em análise</span></td></tr>
+              <tr data-type="Investigações"><td><strong>IC nº 0042/2025</strong></td><td>Proteção ambiental</td><td>Equipe 01</td><td>24 jun 2025</td><td><span class="status">Em andamento</span></td></tr>
+              <tr data-type="Investigações"><td><strong>NF nº 0113/2025</strong></td><td>Serviço público</td><td>Equipe 03</td><td>30 jun 2025</td><td><span class="status">Em andamento</span></td></tr>
+              <tr data-type="Fiscalizações"><td><strong>Fiscalização nº 009/2025</strong></td><td>Unidade de saúde</td><td>Equipe 04</td><td>20 jun 2025</td><td><span class="status">Em andamento</span></td></tr>
+              <tr data-type="Fiscalizações"><td><strong>Fiscalização nº 006/2025</strong></td><td>Transporte escolar</td><td>Equipe 02</td><td>22 jun 2025</td><td><span class="status review">Aguardando análise</span></td></tr>
+              <tr data-type="Fiscalizações"><td><strong>Fiscalização nº 003/2025</strong></td><td>Atendimento ao cidadão</td><td>Equipe 01</td><td>28 jun 2025</td><td><span class="status">Em andamento</span></td></tr>
+            </tbody></table></div>
           </section>
 
           <div class="lower-grid">
@@ -71,12 +85,46 @@
     </div>
     <script>
       const breadcrumb = document.querySelector('#breadcrumb');
+            const managementWorkspace = document.querySelector('#management-workspace');
+      const managementTitle = document.querySelector('#management-title');
+      const recordSearch = document.querySelector('#record-search');
+      const recordsBody = document.querySelector('#records-body');
+      const visibleCount = document.querySelector('#visible-count');
+      const updateRecords = () => {
+        const activeType = document.querySelector('.management-tab.active').dataset.management;
+        const term = recordSearch.value.toLowerCase().trim();
+        let count = 0;
+        recordsBody.querySelectorAll('tr').forEach((row) => {
+          const matches = row.dataset.type === activeType && row.textContent.toLowerCase().includes(term);
+          row.hidden = !matches;
+          if (matches) count += 1;
+        });
+        visibleCount.textContent = count;
+      };
       document.querySelectorAll('[data-section]').forEach((button) => {
         button.addEventListener('click', () => {
           const section = button.dataset.section;
           breadcrumb.textContent = `Área de trabalho / ${section}`;
           document.querySelectorAll('.nav button').forEach((item) => item.classList.toggle('active', item.dataset.section === section));
+          if (section === 'Investigações' || section === 'Fiscalizações') {
+            managementWorkspace.hidden = false;
+            managementTitle.textContent = section;
+            document.querySelectorAll('.management-tab').forEach((tab) => tab.classList.toggle('active', tab.dataset.management === section));
+            updateRecords();
+            managementWorkspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            managementWorkspace.hidden = true;
+          }
         });
+      });
+      document.querySelectorAll('.management-tab').forEach((tab) => tab.addEventListener('click', () => {
+        managementTitle.textContent = tab.dataset.management;
+        document.querySelectorAll('.management-tab').forEach((item) => item.classList.toggle('active', item === tab));
+        updateRecords();
+      }));
+      recordSearch.addEventListener('input', updateRecords);
+      document.querySelector('#new-record').addEventListener('click', () => {
+        breadcrumb.textContent = `Área de trabalho / Novo registro de ${managementTitle.textContent.toLowerCase()}`;
       });
       document.querySelector('#new-procedure').addEventListener('click', () => {
         breadcrumb.textContent = 'Área de trabalho / Novo procedimento';
