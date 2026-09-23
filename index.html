@@ -130,6 +130,10 @@
       document.querySelector('#new-procedure').addEventListener('click', () => {
         breadcrumb.textContent = 'Área de trabalho / Novo procedimento';
       });
+            document.querySelectorAll('[data-prompt]').forEach((button) => button.addEventListener('click', () => {
+        document.querySelector('#chat-input').value = button.dataset.prompt;
+        document.querySelector('#chat-input').focus();
+      }));
       document.querySelector('#chat-form').addEventListener('submit', (event) => {
         event.preventDefault();
         const input = document.querySelector('#chat-input');
